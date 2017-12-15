@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <!--  引入 react CDN文件和 Babel 编译器 -->
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <style media="screen">
+      html, body, .root {
+        height: 100%;
+      }
+
+      body {
+        line-height: 1.5;
+      }
+
+      /* Loader */
+
+      .shelf-loader-box {
+        text-align: center;
+        margin-top: 20px;
+      }
+
+      .loader-shelf-menu {
+        margin-left: 10px;
+      }
+
+      .loader-box-svg {
+        color: #2980b9;
+        width: 100px;
+        height: 100px;
+        display: inline-block;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 构建容器 -->
+    <div id="root"></div>
+    <script type="text/babel">
+    /* 构建组件 */
+
+    /**
+     * @description Represents a loader box, a square box with loading image and loading text.
+     * @constructor
+     * @param {Object} props - The props that were defined by the caller of this component.
+     * @param {boolean} props.loading - Visibility of the component.
+     * @param {number} props.size - The size in pixel of the box.
+     * @param {type} props.type - The type of the loader.
+     * @param {string} props.message - The message to be displayed with the box.
+     */
+    function LoaderBox(props) {
+      const type = ['clock','dots','circle'];
+      const loaders = ['clock.svg', 'dots.svg', 'circle.svg'];
+
+    	if (!props.loading) {
+    		return null;
+    	}
+    	let style = {};
+    	if (props.size) {
+    		style = {width: props.size, height: props.size};
+    	}
+    	let loaderType;
+    	if (!props.type) {
+    		loaderType = type[0];
+    	}
+    	else{
+    		loaderType = props.type;
+    	}
+    	return (
+    		<div className="loader-box">
+    			<div>
+    				<img src={loaders[type.indexOf(loaderType)]} className="loader-box-svg" style={style} alt="Loader"/>
+    			</div>
+    			{props.message &&
+      			<div>
+      				{props.message}
+      			</div>
+    			}
+    		</div>
+    	);
+    }
+
+    /* 将组件的渲染结果放入容器 */
+    ReactDOM.render(
+      <div className="shelf-loader-box">
+        <LoaderBox loading={true} size={70} message="LOADING..."/>
+      </div>,
+      document.getElementById('root')
+    );
+    </script>
+  </body>
+</html>
