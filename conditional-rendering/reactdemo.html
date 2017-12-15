@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <!--  引入 react CDN文件和 Babel 编译器 -->
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+  </head>
+  <body>
+    <!-- 构建容器 -->
+    <div id="example"></div>
+    <!-- Babel 代码 -->
+    <script type="text/babel">
+    /* 构建组件 */
+    class RenderPicture extends React.Component {
+      state = {
+        gender: this.props.gender,
+      };
+
+      // 通过函数来生成图片地址数组
+      selectPicture(){
+        if (this.state.gender === 'woman') {
+          return [
+            'images/img_avatar4.png',
+            'images/img_avatar5.png',
+            'images/img_avatar6.png'
+          ];
+        } else {
+          return [
+            'images/img_avatar1.png',
+            'images/img_avatar2.png',
+            'images/img_avatar3.png'
+          ];
+        }
+      };
+      // 将储存多个图片地址的数组放在类中
+      // ReactDOM.render 中输入性别选项
+      // return 函数里至少有一个 html 标签容器
+      render() {
+        return (
+          <div>
+            {
+              this.selectPicture().map((img)=> (
+                <img
+                  key={img}
+                  src={img}
+                />
+              ))
+            }
+          </div>
+        )
+      }
+    };
+
+    /* 将组件的渲染结果放入容器 */
+    ReactDOM.render(
+      <RenderPicture gender={'woman'} />,
+      document.getElementById('example')
+    );
+    </script>
+  </body>
+</html>
